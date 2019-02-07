@@ -1,0 +1,25 @@
+.modal-backdrop{
+  background-color: #aaa;
+  }
+  
+  .login-footer{
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid #e9ecef;
+  border-bottom-right-radius: .3rem;
+  border-bottom-left-radius: .3rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  color: #616161;
+  }
+  .st0{fill:#FFFFFF;}
+  .st1{fill:#F2A929;}
+  .st2{fill:#231F20;}
+  .st3{fill:#EF8431;}
+
+  .eyeIcon{
+    position: absolute;
+    top:25% ;
+    right :8.5% ;
+  }
+
