@@ -1,14 +1,7 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react'
 import './App.css';
-import Login from './Containers/Login/login';
-import {Greet} from './Containers/greet';
-import AppComponent from './Containers/classComponent';
-import MessageComponent from './Containers/message';
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter, Container } from 'mdbreact';
-import Data from './Containers/Data-grid/Data-grid';
- import axios from 'axios';
-const welcome = 'Welcome to react';
+import GreatWall from './Containers/Great-wall/GreatWall';
+
 
 class App extends Component {
 
@@ -182,44 +175,15 @@ class App extends Component {
     ]
 }
 }
-
-  componentDidMount() {
-    axios.get('http://www4.quodd.com/b4utrade/app/QuoddViewDetailedQuoteJsonList.do?UPCLOSETICKER=MSFT')
-    .then(json => {
-        this.setState({
-            data : json.data
-        })
-    });
-  }
-
   render() {
-    const data = () => {
-     this.setState({
-      show : !this.state.show
-     });
-    }
-
     return (
       <div className="App">
-      <Data data = {this.state.data} columns = {this.state.columns} pageSize = '10' minRows = '0'></Data>
+      <GreatWall  columns = {this.state.columns} pageSize = '10' minRows = '0' symbol = 'MSFT'></GreatWall>
       </div>
     );
   }
 }
 
 
-class Welcome extends Component {
- 
-  render(){
-    return(
-      <div>
-      <p>
-      {welcome} {this.props.title}
-    </p>
-  
-    </div>
-    )
-  }
-}
 
 export default App;
