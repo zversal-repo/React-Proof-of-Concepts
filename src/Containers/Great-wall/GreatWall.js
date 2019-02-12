@@ -4,45 +4,63 @@ import "react-table/react-table.css";
 import axios from 'axios';
 
 class GreatWall extends Component {
-    columns
     constructor (props){
         super(props);
         this.state =  {
-          data : []
+          gridData : [],
+          columnOptions : [{
+            Header : '',
+            accessor : ''
+          }]
         }
     }
 
-    componentWillMount() {
-      axios.get('http://www4.quodd.com/b4utrade/app/QuoddViewDetailedQuoteJsonList.do?UPCLOSETICKER=' + `${this.props.symbol}`)
+    getGridData = () => {
+      axios.get('http://www4.quodd.com/b4utrade/app/QuoddViewDetailedQuoteJsonList.do?UPCLOSETICKER=' + this.props.symbol)
       .then(json => {
-          this.setState({
-              data : json.data
-          })
-          this.columns = Object.keys(this.state.data[0]).map((key)=>{
-            return {
-              Header: key,
-              accessor: key
-            }
-          });
+        const columnNames = Object.keys(json.data[0]).map((key)=>{
+          return {
+            Header: key,
+            accessor: key,
+            style: { 'textAlign': 'center' } 
+          } 
+        });
+
+        this.setState({
+          columnOptions : columnNames
+        })
+
+        this.setState({
+          gridData : json.data,
+        });
       }); 
     }
-  
+
     render () {
-      const { pageSize , minRows } = this.props;
+      const { pageSize , minRows  } = this.props;
        return (    
        <div>
             <h1 className="text-center">DataGrid</h1> 
             <ReactTable
-            data={this.state.data}
-            columns = {columns}
-            defaultPageSize={pageSize}
+            data={this.state.gridData}
+            columns = {this.state.columnOptions}
+            defaultPageSize={pageSize}  
             className="-striped -highlight"
-            minRows = {minRows}
-        >
+            minRows = {minRows}>
         </ReactTable>
        </div>
        );
     };
+
+     componentDidMount() {
+      // Calling Api Every 5 
+      this.getGridData();
+      this.timer = setInterval(()=> this.getGridData(), 5000); 
+                          }
+      // Removing Timer Once Component is Destroyed
+      componentWillMount() {
+        this.timer = null
+      }
 }
 
 export default GreatWall;
